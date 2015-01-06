@@ -1,0 +1,21 @@
+{
+  "name": "angular-input-date",
+  "description": "AngularJS directive to enable support for input[type=\"date\"]",
+  "version": "1.0.4",
+  "main": "src/angular-input-date.js",
+  "dependencies": {
+    "angular": "~1.2.26"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/betsol/angular-input-date",
+  "_release": "1.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.4",
+    "commit": "2354e333c734884dbd19af3b4b87baa5692b085c"
+  },
+  "_source": "git://github.com/betsol/angular-input-date.git",
+  "_target": "~1.0.4",
+  "_originalSource": "angular-input-date",
+  "_direct": true
+}
