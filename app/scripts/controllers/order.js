@@ -54,9 +54,11 @@ angular.module('cloudLaundryApp')
     }
     
   // $scope.userAddress = addressFactory.getUserAddress();
-
+  var remote_host = "123.56.92.81";
+       var local_host = "localhost";
+       var host = local_host;
    var userAddress;
-     $http.get('http://localhost:3000/GetUserAddress?id='+4).
+     $http.get('http://'+host+':3000/GetUserAddress?id='+4).
               success(function(data, status, headers, config) {
                 // this callback will be called asynchronously
                 // when the response is available
@@ -86,13 +88,13 @@ angular.module('cloudLaundryApp')
       var order = {};
       var addressIndex =$scope.selectedAddress;
       order.userID = parseInt("0004"); 
-      order.name = $scope.userAddress[addressIndex].userName;
-      order.tel = $scope.userAddress[addressIndex].userTel;
+      order.name = $scope.userAddress[addressIndex].UserName;
+      order.tel = $scope.userAddress[addressIndex].UserTel;
       order.day = $scope.selectedDay;
       order.time = $scope.selectedTime;
-      order.city = $scope.userAddress[addressIndex].cityName;
-      order.zone = $scope.userAddress[addressIndex].zone;
-      order.detailAddress = $scope.userAddress[addressIndex].detail;
+      order.city = $scope.userAddress[addressIndex].CityName;
+      order.zone = $scope.userAddress[addressIndex].Zone;
+      order.detailAddress = $scope.userAddress[addressIndex].Detail;
       orderFactory.add(order);
       MessageFactory.create(order,'NewOrder');
       

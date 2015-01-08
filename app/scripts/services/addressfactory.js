@@ -9,17 +9,18 @@
  */
 angular.module('cloudLaundryApp')
   .factory('addressFactory', ["$http",function ($http) {
-  //  var city = [
-  //    {id:1,name:"南京市",zone:["玄武区","江宁区","仙林区"]},
-  //    {id:2,name:"上海市",zone:["徐汇区","静安区"]},
-  //    {id:3,name:"北京市",zone:["朝阳区","东城区"]}
-  //  ];
+
 
    var city;
    var index;
+ // 123.56.92.81
 
+ var remote_host = "123.56.92.81";
+ var local_host = "localhost";
 
-   $http.get('http://localhost:3000/GetCity').
+ var host = local_host;
+
+   $http.get('http://'+host+':3000/GetCity').
     success(function(data, status, headers, config) {
        city = data;
     }).
@@ -36,7 +37,7 @@ angular.module('cloudLaundryApp')
         index = k;
         area[index].zone = [];
         console.log("index is : " + index);
-        $http.get('http://localhost:3000/GetZone?id='+area[index].id).
+        $http.get('http://'+host+':3000/GetZone?id='+area[index].id).
         success(function(data, status, headers, config) {
           // this callback will be called asynchronously
           // when the response is available

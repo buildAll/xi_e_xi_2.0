@@ -11,6 +11,7 @@ angular.module('cloudLaundryApp')
   .factory('MessageFactory', ['$http','$rootScope',function ($http, $rootScope) {
          var addData = function(params,backendMethod) {
               var method = 'POST';
+              // var url = "http://123.56.92.81:3000/"+backendMethod;
               var url = "http://localhost:3000/"+backendMethod;
                console.log($.param(params));
               return $http({

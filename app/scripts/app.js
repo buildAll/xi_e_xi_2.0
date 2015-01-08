@@ -39,8 +39,10 @@ angular
         controller: 'MyorderCtrl'
       })
       .when('/userCenter', {
-        templateUrl: 'views/userCenter.html',
-        controller: 'UsercenterCtrl'
+       // templateUrl: 'views/userCenter.html',
+        //controller: 'UsercenterCtrl'
+        templateUrl: 'views/signUp.html',
+        controller: 'SignupCtrl'
       })
       .otherwise({
         redirectTo: '/'

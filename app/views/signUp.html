@@ -1,0 +1,25 @@
+<div class="container">
+	<div class="mainbox col-xs-10 col-xs-offset-1">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<div class="panel-title">注册</div>
+			</div>
+			<div class="panel-body">
+				<form name="signUp" ng-submit="addNewUser()" class="form-horizontal" role="form">
+					<div class="input-group" style="margin-bottom: 25px">
+						<span class="input-group-addon">手机号码</span>
+						<input name="userTel" type="number"  class="form-control" ng-model="userTel" placeholder="请输入11位手机号..." ng-minlength="11" ng-maxlength="11" ng-model-options="{updateOn:blur}"  required>
+					</div>
+					<div class="alert alert-danger" ng-show="signUp.userTel.$dirty*(signUp.userTel.$error.minlength||signUp.userTel.$error.maxlength)*signUp.userTel.$touched">请输入11位有效电话号码</div>
+					<div class="form-group">
+						<div class="col-xs-12 controls">
+							<button class="btn btn-success col-xs-12">
+								确认
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

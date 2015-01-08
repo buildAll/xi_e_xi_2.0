@@ -1,0 +1,38 @@
+.full-width{
+    width:100%;
+}
+
+.center-align{
+	text-align: center;
+}
+
+.left-align{
+	text-align: left;
+}
+
+.right-align{
+	text-align: right;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: -webkit-flex;
+
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+@media (min-width: 768px ) {
+  .row {
+      position: relative;
+  }
+
+  .bottom-align-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

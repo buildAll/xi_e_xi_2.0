@@ -2,21 +2,52 @@
 var mysql = require('mysql');
 
 var pool = mysql.createPool({
+ 
+  // host     : '123.56.92.81',
+  // user     : 'wechat',
+  // password : 'wechat', 
   host     : 'localhost',
   user     : 'root',
   password : 'Zb817941',
-  database : 'xiexi',
+  database : 'new_xiexi',
+ // socketPath : '/tmp/mysql.sock',
   socketPath : '/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock',
   port:3306
 });
 
 
+// var connection = mysql.createConnection({
+//   host     : '123.56.92.81',
+//   user     : 'wechat',
+//   password : 'wechat',
+//   socketPath : '/tmp/mysql.sock',
+//   port:3306
+// });
 
+// connection.connect(function(err) {
+//   if (err) {
+//     console.error('error connecting: ' + err.stack);
+//     return;
+//   }
+
+//   console.log('connected as id ' + connection.threadId);
+// });
+
+// pool.getConnection(function(err, connection){
+//   if (err) {
+//     console.log(err);
+//   } else{
+//     console.log("OK");
+//     console.log(connection);
+//   };
+//   });
 var CRUD = require('mysql-crud');
 var tableOrder = CRUD(pool, 'order');
 var tableAddress = CRUD(pool, 'address');
 var tableCityName = CRUD(pool, 'city_name');
 var tableZoneName = CRUD(pool, 'zone_name');
+
+var tableCustomer = CRUD(pool, 'customer');
 
 
 
@@ -121,6 +152,9 @@ app.get('/GetUserAddress', function(req, res){
   tableAddress.load({'UserID':userId},function(err,data){
          // console.log(data);
          // userOrder = data;
+         if (err) {
+          console.log(err);
+         } else{};
           res.send(data);
   })
   // console.log(req);
@@ -145,6 +179,26 @@ app.get('/GetZone', function(req, res){
   tableZoneName.load({"cityID":cityID},function(err,data){
           console.log(data);
           res.send(data);
+  })
+  // console.log(req);
+  //console.log("The order is :" + userOrder);
+  
+});
+
+app.get('/addNewUser', function(req, res){
+  console.log(req.query);
+  var customer = {}; 
+  customer.customer_phone = Number(req.query.tel);
+  customer.wechat_id = Number(req.query.wechat_id);
+  tableCustomer.create(customer,function(err,data){
+          if (err) {
+            console.log(err);
+          } else{
+            console.log(data);
+            res.send("Sign Up successfully!");
+          };
+         
+          //res.send(data);
   })
   // console.log(req);
   //console.log("The order is :" + userOrder);

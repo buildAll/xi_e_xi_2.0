@@ -68,7 +68,8 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+       // hostname: 'localhost',
+        hostname: '0.0.0.0',
         livereload: 35729
       },
       livereload: {
@@ -79,7 +80,7 @@ module.exports = function (grunt) {
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                connect.static('/bower_components')
               ),
               connect.static(appConfig.app)
             ];
@@ -95,7 +96,7 @@ module.exports = function (grunt) {
               connect.static('test'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                connect.static('/bower_components')
               ),
               connect.static(appConfig.app)
             ];
@@ -111,24 +112,24 @@ module.exports = function (grunt) {
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: {
-        src: [
-          'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
-        ]
-      },
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/spec/{,*/}*.js']
-      }
-    },
+    // jshint: {
+    //   options: {
+    //     jshintrc: '.jshintrc',
+    //     reporter: require('jshint-stylish')
+    //   },
+    //   all: {
+    //     src: [
+    //       'Gruntfile.js',
+    //       '<%= yeoman.app %>/scripts/{,*/}*.js'
+    //     ]
+    //   },
+    //   test: {
+    //     options: {
+    //       jshintrc: 'test/.jshintrc'
+    //     },
+    //     src: ['test/spec/{,*/}*.js']
+    //   }
+    // },
 
     // Empties folders to start fresh
     clean: {
@@ -401,7 +402,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:jshint',
+   // 'newer:jshint',
     'test',
     'build'
   ]);

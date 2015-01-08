@@ -15,7 +15,12 @@ angular.module('cloudLaundryApp')
     //  MessageFactory.get(parseInt("1"));  
      // $scope.myOrders = orderFactory.get();
      var userOrder;
-     $http.get('http://localhost:3000/GetUserOrder?id='+4).
+
+      var remote_host = "123.56.92.81";
+       var local_host = "localhost";
+       var host = local_host;
+
+     $http.get('http://'+host+':3000/GetUserOrder?id='+4).
               success(function(data, status, headers, config) {
                 // this callback will be called asynchronously
                 // when the response is available

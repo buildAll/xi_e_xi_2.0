@@ -1,17 +1,24 @@
-<button class="btn btn-default btn-sm col-xs-2" ng-click="goBack()">返回</button>
+<!-- <button class="btn btn-default btn-sm col-xs-2" ng-click="goBack()">返回</button>
 <br>
-<hr>
+<hr> -->
 
 <div class="container ">
 	<form ng-submit="saveAddress()" class="form-horizontal" name="newAddress">
 
 	    <div class="form-group">
-   	  	<label class="control-label col-xs-4"> 姓名  </label>
-           <input class=" col-xs-8 " type="text" "form-control col-xs-7" ng-model="userName" placeholder="请输入姓名..." required>
+        <div class="input-group">
+          <!-- <label class="control-label col-xs-4"> 姓名  </label> -->
+           <span class="input-group-addon">姓名</span>
+           <input class=" form-control " type="text" ng-model="userName" placeholder="请输入姓名..." required>
+        </div>
+   	  	
    	  </div>
       <div class="form-group">
-        <label class="control-label col-xs-4"> 手机号码  </label>
-           <input class=" col-xs-8 "  type="number" "form-control col-xs-7" name="userTel" ng-model="userTel" placeholder="请输入11位手机号..." ng-minlength="11" ng-maxlength="11"ng-model-options="{updateOn:blur}"  required>
+        <div class="input-group">
+          <!-- <label class="control-label col-xs-4"> 手机号码  </label> -->
+          <span class="input-group-addon">手机</span>
+           <input class=" form-control "  type="number" name="userTel" ng-model="userTel" placeholder="请输入11位手机号..." ng-minlength="11" ng-maxlength="11"ng-model-options="{updateOn:blur}"  required>
+        </div>
       </div>
        <div class="alert alert-danger" ng-show="newAddress.userTel.$dirty*newAddress.userTel.$error.minlength*newAddress.userTel.$touched">请输入11位有效电话号码</div>
         <div class="alert alert-danger" ng-show="newAddress.$error.maxlength">请输入11位有效电话号码</div> 
@@ -20,15 +27,15 @@
 
       <hr>
       <div class="form-group">
-          <label class=" col-xs-4 control-label ">城市</label>
-          <div class="col-xs-8 selectContainer">
+          <label class=" col-xs-2 control-label ">城市</label>
+          <div class="col-xs-10 selectContainer">
               <select name="city" id=""  class="form-control full-width" ng-model="selectedCity" ng-options="city.name for city in cityForSelect" ng-change="updateZoneForSelect()" required></select>
           </div>
       </div> 
 
       <div class="form-group">
-          <label class=" col-xs-4 control-label ">区域</label>
-          <div class=" col-xs-8 selectContainer">
+          <label class=" col-xs-2 control-label ">区域</label>
+          <div class=" col-xs-10 selectContainer">
               <select name="zone" id=""  class="form-control  " ng-model="selectedZone" ng-options="zone for zone in zoneForSelect" required></select>
           </div>
       </div> 

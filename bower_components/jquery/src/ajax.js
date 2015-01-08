@@ -41,7 +41,7 @@ var
 	allTypes = "*/".concat( "*" ),
 
 	// Document location
-	ajaxLocation = window.location.href,
+	ajaxLocation = location.href,
 
 	// Segment location into parts
 	ajaxLocParts = rurl.exec( ajaxLocation.toLowerCase() ) || [];
