@@ -8,14 +8,16 @@
  * Controller of the cloudLaundryApp
  */
 angular.module('cloudLaundryApp')
-  .controller('MainCtrl', function ($scope,$rootScope,$http) {
+  .controller('MainCtrl', ['isSignUpFactory','$scope','$rootScope','$http','$location',function (isSignUpFactory,$scope,$rootScope,$http,$location) {
        $scope.newOrder = function() {
        	//$rootScope.$emit('newOrder');
-       	// var isSignUp = userStatus.isSignUp();
-        //   if (isSignUp) {
-        //   	$location.path('/order');
-        //   } else{
-        //   	$location.path('/signUp')
-        //   };
+       	 var isSignUp = isSignUpFactory.checkStatus();
+           if (isSignUp) {
+            console.log("go to order");
+          	$location.path('/order');
+          } else{
+            console.log("go to signUp");
+          	$location.path('/signUp')
+          };
        }
-  });
+  }]);

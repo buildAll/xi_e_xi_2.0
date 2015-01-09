@@ -93,7 +93,7 @@ app.post('/NewOrder', function(req, res){
 	    };
 	       
 	    // console.log(vals); 
-      res.send("Order Added");
+      res.sendStatus("Order Added");
 	});
 
    
@@ -123,7 +123,7 @@ app.post('/NewAddress', function(req, res){
       };
          
       // console.log(vals); 
-      res.send("Address Added");
+      res.sendStatus("Address Added");
   });
 
    
@@ -137,7 +137,7 @@ app.get('/GetUserOrder', function(req, res){
 	tableOrder.load({'UserID':userId},function(err,data){
          // console.log(data);
          // userOrder = data;
-          res.send(data);
+          res.sendStatus(data);
 	})
 	// console.log(req);
 	//console.log("The order is :" + userOrder);
@@ -155,7 +155,7 @@ app.get('/GetUserAddress', function(req, res){
          if (err) {
           console.log(err);
          } else{};
-          res.send(data);
+          res.sendStatus(data);
   })
   // console.log(req);
   //console.log("The order is :" + userOrder);
@@ -167,7 +167,7 @@ app.get('/GetCity', function(req, res){
   tableCityName.load({},function(err,data){
           console.log(data);
          // userOrder = data;
-          res.send(data);
+          res.sendStatus(data);
   })
   // console.log(req);
   //console.log("The order is :" + userOrder);
@@ -178,7 +178,7 @@ app.get('/GetZone', function(req, res){
   var cityID = Number(req.query.id);
   tableZoneName.load({"cityID":cityID},function(err,data){
           console.log(data);
-          res.send(data);
+          res.sendStatus(data);
   })
   // console.log(req);
   //console.log("The order is :" + userOrder);
@@ -195,11 +195,50 @@ app.get('/addNewUser', function(req, res){
             console.log(err);
           } else{
             console.log(data);
-            res.send("Sign Up successfully!");
+            res.sendStatus("Sign Up successfully!");
           };
          
-          //res.send(data);
+          //res.sendStatus(data);
   })
+  // console.log(req);
+  //console.log("The order is :" + userOrder);
+  
+});
+
+app.get('/isSignUp', function(req, res){
+  console.log(req.query);
+  var wechat_id = req.query.wechat_id;
+  tableCustomer.load({"wechat_id":wechat_id},function (err,data) {
+     if (err) {
+      console.log(err);
+      res.sendStatus("No");
+     } else{
+      if (data.length) {
+        console.log("user has signed up\n");
+          console.log(data);
+        res.sendStatus("Yes");
+      } else{
+        console.log("can not find this user\n");
+        res.sendStatus("No");
+      };
+      
+     };
+  }) 
+
+  
+  // var customer = {}; 
+  // customer.customer_phone = Number(req.query.tel);
+  // customer.wechat_id = Number(req.query.wechat_id);
+  // tableCustomer.create(customer,function(err,data){
+  //         if (err) {
+  //           console.log(err);
+  //         } else{
+  //           console.log(data);
+  //           res.sendStatus("Sign Up successfully!");
+  //         };
+         
+  //         //res.sendStatus(data);
+ // })
   // console.log(req);
   //console.log("The order is :" + userOrder);
   
