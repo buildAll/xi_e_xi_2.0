@@ -8,7 +8,7 @@
  * Controller of the cloudLaundryApp
  */
 angular.module('cloudLaundryApp')
-  .controller('MainCtrl', ['isSignUpFactory','$scope','$rootScope','$http','$location',function (isSignUpFactory,$scope,$rootScope,$http,$location) {
+  .controller('MainCtrl', ['isSignUpFactory','addressFactory','$scope','$rootScope','$http','$location',function (isSignUpFactory,addressFactory,$scope,$rootScope,$http,$location) {
        $scope.newOrder = function() {
        	//$rootScope.$emit('newOrder');
        	 var isSignUp = isSignUpFactory.checkStatus();

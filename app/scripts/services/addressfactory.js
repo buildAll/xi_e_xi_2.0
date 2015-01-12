@@ -22,7 +22,13 @@ angular.module('cloudLaundryApp')
 
    $http.get('http://'+host+':3000/GetCity').
     success(function(data, status, headers, config) {
-       city = data;
+      if (data) {
+        console.log(data);
+        city = data;
+      } else{
+        console.log("Get city failed")
+      };
+       
     }).
     error(function(data, status, headers, config) {
     }).
@@ -37,7 +43,7 @@ angular.module('cloudLaundryApp')
         index = k;
         area[index].zone = [];
         console.log("index is : " + index);
-        $http.get('http://'+host+':3000/GetZone?id='+area[index].id).
+        $http.get('http://'+host+':3000/GetZone?id='+area[index].city_id).
         success(function(data, status, headers, config) {
           // this callback will be called asynchronously
           // when the response is available
@@ -47,7 +53,9 @@ angular.module('cloudLaundryApp')
               console.log("index is : " + index);
               console.log("i is : " + i);
 
-               area[index].zone.push(data[i].name);
+              // area[index].zone.push(data[i].regionname);
+               area[index].zone.push(data[i]);
+
             };
            //console.log(data);
             k++;

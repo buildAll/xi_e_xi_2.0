@@ -47,8 +47,8 @@
            
          	<tr ng-repeat="addr in userAddress track by $index" >
 	      	<th data-field="state" data-radio="true"><input name="raidoBox" type="radio" ng-model="$parent.selectedAddress" value="{{$index}}" required></th>
-	        <th data-field="cityname" data-align="center">{{addr.CityName}}</th>
-	        <th data-field="cityzone" data-align="center">{{addr.Zone}}</th>
+	        <th data-field="cityname" data-align="center">{{addr.city_name}}</th>
+	        <th data-field="cityzone" data-align="center">{{addr.region_name}}</th>
 	        <th ><button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only data-align="center"">Close</span></button></th>
 	      </tr>
            

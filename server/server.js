@@ -16,6 +16,8 @@ var pool = mysql.createPool({
 });
 
 
+
+
 // var connection = mysql.createConnection({
 //   host     : '123.56.92.81',
 //   user     : 'wechat',
@@ -44,8 +46,10 @@ var pool = mysql.createPool({
 var CRUD = require('mysql-crud');
 var tableOrder = CRUD(pool, 'order');
 var tableAddress = CRUD(pool, 'address');
-var tableCityName = CRUD(pool, 'city_name');
-var tableZoneName = CRUD(pool, 'zone_name');
+// var tableCityName = CRUD(pool, 'city_name');
+// var tableZoneName = CRUD(pool, 'zone_name');
+var tableCityName = CRUD(pool, 'city');
+var tableZoneName = CRUD(pool, 'region');
 
 var tableCustomer = CRUD(pool, 'customer');
 
@@ -106,12 +110,12 @@ app.post('/NewAddress', function(req, res){
     // console.log("below is the new Address \n");
     //console.log(data);
     var newAddress = {}; 
-    newAddress.UserName = data.userName;
-    newAddress.UserTel = data.userTel;
-    newAddress.CityName = data.cityName;
-    newAddress.Zone = data.zone;
-    newAddress.Detail = data.detail;
-    newAddress.UserID = data.userID;
+    newAddress.contacter_name = data.contacter_name;
+    newAddress.contacter_phone = data.contacter_phone;
+    newAddress.city_id = data.city_id;
+    newAddress.region_id = data.region_id;
+    newAddress.street = data.street;
+    newAddress.customer_id = data.customer_id;
 
    // console.log(newOrder);
 
@@ -135,12 +139,8 @@ app.get('/GetUserOrder', function(req, res){
 	var userOrder;
 	console.log(userId);
 	tableOrder.load({'UserID':userId},function(err,data){
-         // console.log(data);
-         // userOrder = data;
           res.sendStatus(data);
 	})
-	// console.log(req);
-	//console.log("The order is :" + userOrder);
 	
 });
 
@@ -148,46 +148,127 @@ app.get('/GetUserOrder', function(req, res){
 app.get('/GetUserAddress', function(req, res){
   var userId = Number(req.query.id);
   var userOrder;
-  console.log(userId);
-  tableAddress.load({'UserID':userId},function(err,data){
-         // console.log(data);
-         // userOrder = data;
+  var userAddress = [];
+  var events = require("events");
+  var eventEmitter = new events.EventEmitter();
+  var cityReady = false;
+  var regionReady = false;
+
+  console.log("userId is " + userId);
+
+  tableAddress.load({'customer_id':userId},function (err,data){
          if (err) {
           console.log(err);
-         } else{};
-          res.sendStatus(data);
+         } else{
+             userAddress = data;
+             eventEmitter.emit('INIT_ADDR_DONE',{addr:userAddress});
+         };
   })
-  // console.log(req);
-  //console.log("The order is :" + userOrder);
+
+  eventEmitter.on('INIT_ADDR_DONE',function (eventData) {
+    var userAddress = eventData.addr;
+    var countCity = 0;
+    var countRegion = 0;
+    
+    for (var i = 0; i < userAddress.length; i++) {
+       tableCityName.load({'city_id':userAddress[i].city_id},function (err,city) {
+            if (err) {
+              console.log("city table error");
+            } else{
+              if(city.length === 1){
+                eventEmitter.emit('GOT_CITY_NAME',{index:countCity,cityname:city[0].cityname});
+                 countCity++;
+                if (countCity === userAddress.length) {
+                     console.log("get cityname successfully\n");
+                     cityReady = true;
+                     eventEmitter.emit('GET_CITY_NAME_DONE');
+                 };
+              }else{
+                console.log("city duplicate error");
+              }
+            };
+       })
+
+       tableZoneName.load({'region_id':userAddress[i].region_id},function (err,region) {
+            if (err) {
+              console.log("region table error");
+            } else{
+              if(region.length === 1){
+                eventEmitter.emit('GOT_REGION_NAME',{index:countRegion,regionname:region[0].regionname});
+                 countRegion++;
+                if (countRegion === userAddress.length) {
+                     console.log("get regionname successfully\n");
+                     regionReady = true;
+                     eventEmitter.emit('GET_REGION_NAME_DONE');
+                 };
+              }else{
+                console.log("region duplicate error");
+              }
+            };
+       })
+      
+    };
+ 
+  })
+
   
+
+  eventEmitter.on('GOT_CITY_NAME',function (eventData) {
+      var i = eventData.index;
+      var cityname = eventData.cityname;
+      if (i<userAddress.length) {
+        userAddress[i].city_name = cityname;
+      }
+  })
+
+  eventEmitter.on('GOT_REGION_NAME',function (eventData) {
+      var i = eventData.index;
+      var regionname = eventData.regionname;
+      if (i<userAddress.length) {
+        userAddress[i].region_name = regionname;
+      }
+  })
+
+  eventEmitter.on('GET_CITY_NAME_DONE',function () {
+    if (regionReady && cityReady) {
+      console.log("final addr is\n");
+      console.log(userAddress);
+      res.json(userAddress);
+    };
+  })
+
+  eventEmitter.on('GET_REGION_NAME_DONE',function () {
+    if (regionReady && cityReady) {
+      console.log("final addr is\n");
+      console.log(userAddress);
+      //res.sendStatus(userAddress);
+      res.json(userAddress);
+    };
+  })
+
 });
 
 
 app.get('/GetCity', function(req, res){
   tableCityName.load({},function(err,data){
           console.log(data);
-         // userOrder = data;
-          res.sendStatus(data);
+          res.json(data);
   })
-  // console.log(req);
-  //console.log("The order is :" + userOrder);
-  
 });
 
 app.get('/GetZone', function(req, res){
   var cityID = Number(req.query.id);
-  tableZoneName.load({"cityID":cityID},function(err,data){
+  tableZoneName.load({"city_id":cityID},function(err,data){
           console.log(data);
-          res.sendStatus(data);
+          // res.sendStatus(data);
+           res.json(data);
   })
-  // console.log(req);
-  //console.log("The order is :" + userOrder);
-  
 });
 
 app.get('/addNewUser', function(req, res){
   console.log(req.query);
   var customer = {}; 
+  var response = {}
   customer.customer_phone = Number(req.query.tel);
   customer.wechat_id = Number(req.query.wechat_id);
   tableCustomer.create(customer,function(err,data){
@@ -195,13 +276,14 @@ app.get('/addNewUser', function(req, res){
             console.log(err);
           } else{
             console.log(data);
-            res.sendStatus("Sign Up successfully!");
+            response.result = 1;
+            console.log(response);
+            // res.sendStatus(response);
+            res.json (response);
           };
          
-          //res.sendStatus(data);
   })
-  // console.log(req);
-  //console.log("The order is :" + userOrder);
+
   
 });
 
@@ -224,23 +306,6 @@ app.get('/isSignUp', function(req, res){
       
      };
   }) 
-
-  
-  // var customer = {}; 
-  // customer.customer_phone = Number(req.query.tel);
-  // customer.wechat_id = Number(req.query.wechat_id);
-  // tableCustomer.create(customer,function(err,data){
-  //         if (err) {
-  //           console.log(err);
-  //         } else{
-  //           console.log(data);
-  //           res.sendStatus("Sign Up successfully!");
-  //         };
-         
-  //         //res.sendStatus(data);
- // })
-  // console.log(req);
-  //console.log("The order is :" + userOrder);
   
 });
 

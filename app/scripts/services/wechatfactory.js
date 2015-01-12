@@ -13,7 +13,7 @@ angular.module('cloudLaundryApp')
 
     function getWeChatID () {
       var wid;
-      wid = 2312121;
+      wid = 231213333321111;
       console.log("wechatID is: "+wid);
       return wid;
     }

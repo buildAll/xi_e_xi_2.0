@@ -10,14 +10,36 @@
 angular.module('cloudLaundryApp')
   .controller('OrderCtrl', ['MessageFactory','timeFactory','addressFactory','orderFactory','$scope','$location','$rootScope','$http', function (MessageFactory,timeFactory,addressFactory,orderFactory,$scope,$location,$rootScope,$http) {
     
+   
+
+
+
+// $scope.userAddress = addressFactory.getUserAddress();
+  var remote_host = "123.56.92.81";
+  var local_host = "localhost";
+  var host = local_host;
+  var userAddress = [];
+  $http.get('http://'+host+':3000/GetUserAddress?id='+4).
+  success(function(data, status, headers, config) {
+    
+     userAddress = data;
+     console.log(data);
+     
+
+  }).
+  error(function(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+  }).then(function(){
+       $scope.userAddress = userAddress;
+  });
+
    var todayDate = new Date;
    var today = todayDate.getDate();
-
-
+   
    $scope.dayList = timeFactory.getDuration().dayDuration;
    $scope.timeList = timeFactory.getValidTimeDuration();
   
-
 
 
    //if the first valid day is today, get the valid time durations for select
@@ -53,28 +75,7 @@ angular.module('cloudLaundryApp')
       $location.path('/');
     }
     
-  // $scope.userAddress = addressFactory.getUserAddress();
-  var remote_host = "123.56.92.81";
-       var local_host = "localhost";
-       var host = local_host;
-   var userAddress;
-     $http.get('http://'+host+':3000/GetUserAddress?id='+4).
-              success(function(data, status, headers, config) {
-                // this callback will be called asynchronously
-                // when the response is available
-                
-                 userAddress = data;
-                 console.log(userAddress);
-
-              }).
-              error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-              }).then(function(){
-                   $scope.userAddress = userAddress;
-                  // console.log("my order is :" + $scope.myOrders);
-              });
-
+  
    $scope.selectedAddress="";
 
    $scope.confirmOrder = function(){
@@ -87,14 +88,20 @@ angular.module('cloudLaundryApp')
   $scope.createOrder = function(){
       var order = {};
       var addressIndex =$scope.selectedAddress;
-      order.userID = parseInt("0004"); 
-      order.name = $scope.userAddress[addressIndex].UserName;
-      order.tel = $scope.userAddress[addressIndex].UserTel;
+      order.customer_id = parseInt("0004"); 
+      order.contacter_name = $scope.userAddress[addressIndex].contacter_name;
+      order.contacter_phone = $scope.userAddress[addressIndex].contacter_phone;
       order.day = $scope.selectedDay;
       order.time = $scope.selectedTime;
-      order.city = $scope.userAddress[addressIndex].CityName;
-      order.zone = $scope.userAddress[addressIndex].Zone;
-      order.detailAddress = $scope.userAddress[addressIndex].Detail;
+      order.city_name = $scope.userAddress[addressIndex].city_name;
+      order.region_name = $scope.userAddress[addressIndex].region_name;
+      order.city_id = $scope.userAddress[addressIndex].city_id;
+      order.region_id = $scope.userAddress[addressIndex].region_id;
+      order.street = $scope.userAddress[addressIndex].street;
+      order.express_status_id = 0;
+      order.is_canceled = 0;
+      order.create_time = today;
+      order.id = order.customer_id + order.region_id + order.city_id + new Date().getHours();
       orderFactory.add(order);
       MessageFactory.create(order,'NewOrder');
       

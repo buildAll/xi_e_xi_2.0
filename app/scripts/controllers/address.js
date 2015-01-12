@@ -35,12 +35,14 @@ angular.module('cloudLaundryApp')
       //get the new address
       $scope.saveAddress = function() {
       	var newAddress = {};
-      	newAddress.userName = $scope.userName;
-      	newAddress.userTel = $scope.userTel;
-      	newAddress.cityName = $scope.selectedCity.name;
+      	newAddress.contacter_name = $scope.userName;
+      	newAddress.contacter_phone = $scope.userTel;
+      	// newAddress.cityName = $scope.selectedCity.name;
+            newAddress.city_id = $scope.selectedCity.city_id;
+            newAddress.region_id = $scope.selectedZone.region_id;
       	newAddress.zone = $scope.selectedZone;
-      	newAddress.detail = $scope.detail;
-            newAddress.userID = parseInt("0004"); 
+      	newAddress.street = $scope.detail;
+            newAddress.customer_id = parseInt("0004"); 
       	
       	addressFactory.add(newAddress);
       	console.log(addressFactory.getUserAddress());
