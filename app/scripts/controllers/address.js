@@ -12,7 +12,9 @@
  */
 angular.module('cloudLaundryApp')
   .controller('AddressCtrl',[ '$scope','$location','$rootScope','addressFactory','MessageFactory', function ($scope,$location,$rootScope,addressFactory,MessageFactory) {
+
       // go back to previous view
+
       $scope.goBack = function (){
       	 $location.path('/order');
       }
@@ -35,6 +37,7 @@ angular.module('cloudLaundryApp')
       //get the new address
       $scope.saveAddress = function() {
       	var newAddress = {};
+// <<<<<<< HEAD
       	newAddress.contacter_name = $scope.userName;
       	newAddress.contacter_phone = $scope.userTel;
       	// newAddress.cityName = $scope.selectedCity.name;
@@ -44,11 +47,23 @@ angular.module('cloudLaundryApp')
       	newAddress.region_name = $scope.selectedZone.regionname;
       	newAddress.street = $scope.detail;
             newAddress.customer_id = parseInt("0004"); 
+// =======
+//       	newAddress.userName = $scope.userName;
+//       	newAddress.userTel = $scope.userTel;
+//       	newAddress.cityName = $scope.selectedCity.name;
+//       	newAddress.zone = $scope.selectedZone;
+//       	newAddress.detail = $scope.detail;
+//             newAddress.userID = parseInt("0004"); 
+// >>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc
       	
       	addressFactory.add(newAddress);
       	console.log(addressFactory.getUserAddress());
             MessageFactory.create(newAddress,"NewAddress");
-            $scope.goBack();
+// <<<<<<< HEAD
+//             $scope.goBack();
+// =======
+//             // $scope.goBack();
+// >>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc
       }
 
       $rootScope.$on('addressOK',function(){

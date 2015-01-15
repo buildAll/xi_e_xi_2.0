@@ -10,6 +10,7 @@
 angular.module('cloudLaundryApp')
   .controller('OrderCtrl', ['MessageFactory','timeFactory','addressFactory','orderFactory','$scope','$location','$rootScope','$http', function (MessageFactory,timeFactory,addressFactory,orderFactory,$scope,$location,$rootScope,$http) {
     
+// <<<<<<< HEAD
    
 
 
@@ -37,11 +38,21 @@ angular.module('cloudLaundryApp')
    var todayDate = new Date;
    var today = todayDate.getDate();
    
+// =======
+//    var todayDate = new Date;
+//    var today = todayDate.getDate();
+
+
+// >>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc
    $scope.dayList = timeFactory.getDuration().dayDuration;
    $scope.timeList = timeFactory.getValidTimeDuration();
   
 
 
+// <<<<<<< HEAD
+// =======
+
+// >>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc
    //if the first valid day is today, get the valid time durations for select
    //else, use the full time durations for select 
    function getTimeDuration (index) {
@@ -75,7 +86,30 @@ angular.module('cloudLaundryApp')
       $location.path('/');
     }
     
+// <<<<<<< HEAD
   
+// =======
+//   // $scope.userAddress = addressFactory.getUserAddress();
+
+//    var userAddress;
+//      $http.get('http://192.168.1.104:3000/GetUserAddress?id='+4).
+//               success(function(data, status, headers, config) {
+//                 // this callback will be called asynchronously
+//                 // when the response is available
+                
+//                  userAddress = data;
+//                  console.log(userAddress);
+
+//               }).
+//               error(function(data, status, headers, config) {
+//                 // called asynchronously if an error occurs
+//                 // or server returns response with an error status.
+//               }).then(function(){
+//                    $scope.userAddress = userAddress;
+//                   // console.log("my order is :" + $scope.myOrders);
+//               });
+
+// >>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc
    $scope.selectedAddress="";
 
    $scope.confirmOrder = function(){
@@ -88,6 +122,7 @@ angular.module('cloudLaundryApp')
   $scope.createOrder = function(){
       var order = {};
       var addressIndex =$scope.selectedAddress;
+// <<<<<<< HEAD
       order.city_id = $scope.userAddress[addressIndex].city_id;
       order.city_name =  $scope.userAddress[addressIndex].city_name;
       order.contacter_name = $scope.userAddress[addressIndex].contacter_name;
@@ -114,6 +149,16 @@ angular.module('cloudLaundryApp')
       
       
       
+// =======
+//       order.userID = parseInt("0004"); 
+//       order.name = $scope.userAddress[addressIndex].userName;
+//       order.tel = $scope.userAddress[addressIndex].userTel;
+//       order.day = $scope.selectedDay;
+//       order.time = $scope.selectedTime;
+//       order.city = $scope.userAddress[addressIndex].cityName;
+//       order.zone = $scope.userAddress[addressIndex].zone;
+//       order.detailAddress = $scope.userAddress[addressIndex].detail;
+// >>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc
       orderFactory.add(order);
       MessageFactory.create(order,'NewOrder');
       

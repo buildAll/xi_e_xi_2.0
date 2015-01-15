@@ -39,6 +39,7 @@ angular
         controller: 'MyorderCtrl'
       })
       .when('/userCenter', {
+// <<<<<<< HEAD
        templateUrl: 'views/userCenter.html',
         controller: 'UsercenterCtrl'
       })
@@ -46,6 +47,11 @@ angular
         templateUrl: 'views/signUp.html',
         controller: 'SignupCtrl'
       })
+// =======
+//         templateUrl: 'views/userCenter.html',
+//         controller: 'UsercenterCtrl'
+//       })
+// >>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc
       .otherwise({
         redirectTo: '/'
       });

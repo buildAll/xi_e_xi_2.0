@@ -2,8 +2,13 @@
 <div class="container">
 	<div class="row .bottom-align-text">
 		
+<!-- <<<<<<< HEAD -->
 			<!-- <button class="btn btn-default btn-sm col-xs-3" ng-click="goBack()">返回</button> -->
 		    <h4 class="center-align col-xs-9">新的订单</h4>
+<!-- =======
+			<button class="btn btn-default btn-sm col-xs-3" ng-click="goBack()">返回</button>
+		    <h4 class="center-align col-xs-6">新的订单</h4>
+>>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc -->
 
 		    <button class="btn btn-default btn-sm col-xs-3" ng-click="addAddress()">添加地址</button>
 
@@ -11,7 +16,11 @@
 
 </div>	
 
+<!-- <<<<<<< HEAD -->
 
+<!-- =======
+<br>
+>>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc -->
 	
 
 
@@ -24,16 +33,26 @@
    <form name="newOrder" ng-submit="createOrder()" class="form-horizontal">
 
 	    <div class="form-group">
+<!-- <<<<<<< HEAD -->
    	  	<label class="col-xs-4 control-label"><div style="margin-top:5px">服务日期</div></label>
 	   	  	<div class="col-xs-8 selectContainer	">
+<!-- =======
+   	  	<label class="col-xs-5 control-label">服务日期</label>
+	   	  	<div class="col-xs-7 selectContainer	">
+>>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc -->
 	   	  		<select name="date" id="" class="form-control" ng-model="selectedDay"  ng-change="updateTimeDuration()"  ng-options="item.day.date for item in dayList">
 				</select>
 	   	  	</div>
    	    </div>
 
    	    <div class="form-group">
+<!-- <<<<<<< HEAD -->
 	        <label class="col-xs-4 control-label "><div style="margin-top:5px">服务时间段</div></label>
 	        <div class="col-xs-8 selectContainer">
+<!-- =======
+	        <label class="col-xs-5 control-label ">服务时间段</label>
+	        <div class="col-xs-7 selectContainer">
+>>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc -->
 	            <select name="time" id=""  class="form-control" ng-model="selectedTime"  ng-options="item.duration for item in timeList">
 	            </select>
 	        </div>
@@ -47,8 +66,13 @@
            
          	<tr ng-repeat="addr in userAddress track by $index" >
 	      	<th data-field="state" data-radio="true"><input name="raidoBox" type="radio" ng-model="$parent.selectedAddress" value="{{$index}}" required></th>
+<!-- <<<<<<< HEAD -->
 	        <th data-field="cityname" data-align="center">{{addr.city_name}}</th>
 	        <th data-field="cityzone" data-align="center">{{addr.region_name}}</th>
+<!-- =======
+	        <th data-field="cityname" data-align="center">{{addr.CityName}}</th>
+	        <th data-field="cityzone" data-align="center">{{addr.Zone}}</th>
+>>>>>>> 6a1420e6abf13fa95186cb265bb0b7c983628dbc -->
 	        <th ><button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only data-align="center"">Close</span></button></th>
 	      </tr>
            

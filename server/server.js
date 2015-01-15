@@ -2,6 +2,7 @@
 var mysql = require('mysql');
 
 var pool = mysql.createPool({
+
  
   // host     : '123.56.92.81',
   // user     : 'wechat',
@@ -11,9 +12,11 @@ var pool = mysql.createPool({
   password : 'Zb817941',
   database : 'new_xiexi',
  // socketPath : '/tmp/mysql.sock',
+
   socketPath : '/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock',
   port:3306
 });
+
 
 
 
@@ -55,6 +58,7 @@ var tableCustomer = CRUD(pool, 'customer');
 
 
 
+
 //Server Part
 var express = require('./node_modules/express');
 var app = express();
@@ -74,6 +78,7 @@ app.all('*', function(req, res, next) {
 
 //Get post data from front-end and then save it into mysql 
 app.post('/NewOrder', function(req, res){
+
        var order = req.body;
        var newOrder = {}; 
       newOrder.city_id  = order.city_id 
@@ -110,6 +115,7 @@ app.post('/NewOrder', function(req, res){
     // newOrder.Address = data.detailAddress;
     //  newOrder.UserID = data.userID;
 
+
     console.log(newOrder);
 
 	tableOrder.create(newOrder, function (err, vals) {
@@ -119,8 +125,10 @@ app.post('/NewOrder', function(req, res){
 	    	return;
 	    };
 	       
+
 	     console.log(vals); 
       res.sendStatus("Order Added");
+
 	});
 
    
@@ -133,6 +141,7 @@ app.post('/NewAddress', function(req, res){
     // console.log("below is the new Address \n");
     //console.log(data);
     var newAddress = {}; 
+
     newAddress.contacter_name = data.contacter_name;
     newAddress.contacter_phone = data.contacter_phone;
     newAddress.city_id = data.city_id;
@@ -141,6 +150,7 @@ app.post('/NewAddress', function(req, res){
     newAddress.customer_id = data.customer_id;
     newAddress.city_name = data.city_name;
     newAddress.region_name = data.region_name;
+
 
    // console.log(newOrder);
 
@@ -152,7 +162,9 @@ app.post('/NewAddress', function(req, res){
       };
          
       // console.log(vals); 
+
       res.sendStatus("Address Added");
+
   });
 
    
@@ -163,9 +175,11 @@ app.get('/GetUserOrder', function(req, res){
 	var userId = Number(req.query.id);
 	var userOrder;
 	console.log(userId);
+
 	tableOrder.load({'customer_id':userId},function(err,data){
           res.json(data);
 	})
+
 	
 });
 
@@ -333,6 +347,7 @@ app.get('/isSignUp', function(req, res){
   }) 
   
 });
+
 
 
  
