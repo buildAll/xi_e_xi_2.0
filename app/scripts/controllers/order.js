@@ -88,20 +88,32 @@ angular.module('cloudLaundryApp')
   $scope.createOrder = function(){
       var order = {};
       var addressIndex =$scope.selectedAddress;
-      order.customer_id = parseInt("0004"); 
+      order.city_id = $scope.userAddress[addressIndex].city_id;
+      order.city_name =  $scope.userAddress[addressIndex].city_name;
       order.contacter_name = $scope.userAddress[addressIndex].contacter_name;
       order.contacter_phone = $scope.userAddress[addressIndex].contacter_phone;
-      order.day = $scope.selectedDay;
-      order.time = $scope.selectedTime;
-      order.city_name = $scope.userAddress[addressIndex].city_name;
-      order.region_name = $scope.userAddress[addressIndex].region_name;
-      order.city_id = $scope.userAddress[addressIndex].city_id;
-      order.region_id = $scope.userAddress[addressIndex].region_id;
-      order.street = $scope.userAddress[addressIndex].street;
+      order.create_time = today;
+      order.customer_id = parseInt("0004"); 
       order.express_status_id = 0;
       order.is_canceled = 0;
-      order.create_time = today;
-      order.id = order.customer_id + order.region_id + order.city_id + new Date().getHours();
+      order.is_payed = 0;
+      order.order_id = 123123; 
+      order.order_status_id = 0;
+      order.product_id = 0;
+      order.region_id = $scope.userAddress[addressIndex].region_id;
+      order.region_name = $scope.userAddress[addressIndex].region_name;
+      order.reserve_day = $scope.selectedDay.day.day;
+      order.reserve_month = $scope.selectedDay.day.month;
+      order.reserve_time_id = $scope.selectedDay.day.id;
+      order.reserve_year = $scope.selectedDay.day.year;
+      order.reserve_date = $scope.selectedDay.day.date;
+      order.seller_id = 1;
+      //order.time = $scope.selectedTime;
+      order.street = $scope.userAddress[addressIndex].street;
+      
+      
+      
+      
       orderFactory.add(order);
       MessageFactory.create(order,'NewOrder');
       

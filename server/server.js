@@ -74,18 +74,41 @@ app.all('*', function(req, res, next) {
 
 //Get post data from front-end and then save it into mysql 
 app.post('/NewOrder', function(req, res){
+       var order = req.body;
+       var newOrder = {}; 
+      newOrder.city_id  = order.city_id 
+      newOrder.city_name  = order.city_name
+      newOrder.region_name = order.region_name 
+      newOrder.contacter_name  = order.contacter_name 
+      newOrder.contacter_phone = order.contacter_phone 
+      newOrder.create_time = order.create_time 
+      newOrder.customer_id = order.customer_id 
+      newOrder.express_status_id = order.express_status_id 
+      newOrder.is_canceled = order.is_canceled 
+      newOrder.is_payed = order.is_payed 
+      newOrder.order_id = order.order_id 
+      newOrder.order_status_id = order.order_status_id 
+      newOrder.product_id = order.product_id
+      newOrder.region_id = order.region_id
+      newOrder.reserve_day = order.reserve_day
+      newOrder.reserve_month = order.reserve_month 
+      newOrder.reserve_time_id = order.reserve_time_id 
+      newOrder.reserve_year = order.reserve_year 
+      newOrder.reserve_date = order.reserve_date;
+      newOrder.seller_id = order.seller_id 
+      newOrder.street = order.street 
+
    
-    var data = req.body;
-    var newOrder = {}; 
-    newOrder.UserName = data.name;
-    newOrder.UserTel = data.tel;
-    //newOrder.Year = 2015;
-    newOrder.Date = data.day.day.date;
-    newOrder.Time = data.time.duration;
-    newOrder.City = data.city;
-    newOrder.Zone = data.zone;
-    newOrder.Address = data.detailAddress;
-     newOrder.UserID = data.userID;
+   
+    // newOrder.UserName = data.name;
+    // newOrder.UserTel = data.tel;
+    // //newOrder.Year = 2015;
+    // newOrder.Date = data.day.day.date;
+    // newOrder.Time = data.time.duration;
+    // newOrder.City = data.city;
+    // newOrder.Zone = data.zone;
+    // newOrder.Address = data.detailAddress;
+    //  newOrder.UserID = data.userID;
 
     console.log(newOrder);
 
@@ -96,7 +119,7 @@ app.post('/NewOrder', function(req, res){
 	    	return;
 	    };
 	       
-	    // console.log(vals); 
+	     console.log(vals); 
       res.sendStatus("Order Added");
 	});
 
@@ -116,6 +139,8 @@ app.post('/NewAddress', function(req, res){
     newAddress.region_id = data.region_id;
     newAddress.street = data.street;
     newAddress.customer_id = data.customer_id;
+    newAddress.city_name = data.city_name;
+    newAddress.region_name = data.region_name;
 
    // console.log(newOrder);
 
@@ -138,8 +163,8 @@ app.get('/GetUserOrder', function(req, res){
 	var userId = Number(req.query.id);
 	var userOrder;
 	console.log(userId);
-	tableOrder.load({'UserID':userId},function(err,data){
-          res.sendStatus(data);
+	tableOrder.load({'customer_id':userId},function(err,data){
+          res.json(data);
 	})
 	
 });
@@ -186,7 +211,7 @@ app.get('/GetUserAddress', function(req, res){
               }else{
                 console.log("city duplicate error");
               }
-            };
+          };
        })
 
        tableZoneName.load({'region_id':userAddress[i].region_id},function (err,region) {

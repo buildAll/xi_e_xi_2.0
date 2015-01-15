@@ -12,7 +12,7 @@
  */
 angular.module('cloudLaundryApp')
   .controller('AddressCtrl',[ '$scope','$location','$rootScope','addressFactory','MessageFactory', function ($scope,$location,$rootScope,addressFactory,MessageFactory) {
-      //go back to previous view
+      // go back to previous view
       $scope.goBack = function (){
       	 $location.path('/order');
       }
@@ -39,15 +39,16 @@ angular.module('cloudLaundryApp')
       	newAddress.contacter_phone = $scope.userTel;
       	// newAddress.cityName = $scope.selectedCity.name;
             newAddress.city_id = $scope.selectedCity.city_id;
+            newAddress.city_name = $scope.selectedCity.cityname;
             newAddress.region_id = $scope.selectedZone.region_id;
-      	newAddress.zone = $scope.selectedZone;
+      	newAddress.region_name = $scope.selectedZone.regionname;
       	newAddress.street = $scope.detail;
             newAddress.customer_id = parseInt("0004"); 
       	
       	addressFactory.add(newAddress);
       	console.log(addressFactory.getUserAddress());
             MessageFactory.create(newAddress,"NewAddress");
-            // $scope.goBack();
+            $scope.goBack();
       }
 
       $rootScope.$on('addressOK',function(){

@@ -27,15 +27,15 @@
 
       <hr>
       <div class="form-group">
-          <label class=" col-xs-2 control-label ">城市</label>
-          <div class="col-xs-10 selectContainer">
+          <label class=" col-xs-3 control-label ">城市</label>
+          <div class="col-xs-9 selectContainer">
               <select name="city" id=""  class="form-control full-width" ng-model="selectedCity" ng-options="city.cityname for city in cityForSelect" ng-change="updateZoneForSelect()" required></select>
           </div>
       </div> 
 
       <div class="form-group">
-          <label class=" col-xs-2 control-label ">区域</label>
-          <div class=" col-xs-10 selectContainer">
+          <label class=" col-xs-3 control-label ">区域</label>
+          <div class=" col-xs-9 selectContainer">
               <select name="zone" id=""  class="form-control  " ng-model="selectedZone" ng-options="zone.regionname for zone in zoneForSelect" required></select>
           </div>
       </div> 
